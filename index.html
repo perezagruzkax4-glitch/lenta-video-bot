@@ -2,128 +2,33 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LentaVideoBot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LentaVideo</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #000;
-            overflow: hidden; /* Скрываем стандартный скролл */
-        }
-
-        /* Контейнер для ленты */
-        .video-feed {
-            height: 100%;
-            width: 100%;
-            overflow-y: scroll;
-            scroll-snap-type: y mandatory; /* Магия ТикТока: прилипание */
-            scroll-behavior: smooth;
-        }
-
-        /* Блок одного видео */
-        .video-card {
-            height: 100%;
-            width: 100%;
-            scroll-snap-align: start; /* Прилипать к началу */
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #1a1a1a;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Заполнить экран, обрезая края */
-        }
-
-        /* Интерфейс поверх видео */
-        .overlay {
-            position: absolute;
-            bottom: 50px;
-            left: 10px;
-            color: white;
-            z-index: 10;
-            text-shadow: 1px 1px 2px black;
-        }
-
-        .like-btn {
-            position: absolute;
-            bottom: 100px;
-            right: 20px;
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-        }
-    </style>
 </head>
 <body>
-
-<div class="video-feed" id="feed">
-    <!-- Видео 1 -->
-    <div class="video-card">
-        <video loop playsinline src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-        <div class="overlay">
-            <h3>Пользователь 1</h3>
-            <p>Привет! Это первое видео в ленте.</p>
-        </div>
-        <div class="like-btn">❤️</div>
+    <!-- Контейнер для видео -->
+    <div id="video-container" class="video-container">
+        <video id="current-video" class="video-player" muted loop playsinline webkit-playsinline></video>
     </div>
 
-    <!-- Видео 2 -->
-    <div class="video-card">
-        <video loop playsinline src="https://www.w3schools.com/html/movie.mp4"></video>
-        <div class="overlay">
-            <h3>Пользователь 2</h3>
-            <p>А это второе видео. Листай вниз!</p>
-        </div>
-        <div class="like-btn">❤️</div>
+    <!-- Индикатор загрузки (показывается когда видео ещё грузится) -->
+    <div id="loader" class="loader">Загрузка...</div>
+
+    <!-- Простая подпись автора (как в TikTok) -->
+    <div id="caption" class="caption"></div>
+
+    <!-- Индикатор прогресса (полоска) -->
+    <div id="progress-bar" class="progress-bar"></div>
+
+    <!-- Кнопки для переключения (на случай если свайпы неудобно на десктопе) -->
+    <div class="controls">
+        <button id="prev-btn">←</button>
+        <button id="next-btn">→</button>
     </div>
-    
-    <!-- Видео 3 -->
-    <div class="video-card">
-        <video loop playsinline src="https://www.w3schools.com/html/mov_bbb.mp4"></video>
-        <div class="overlay">
-            <h3>Пользователь 3</h3>
-            <p>Тестовое видео.</p>
-        </div>
-        <div class="like-btn">❤️</div>
-    </div>
-</div>
 
-<script>
-    // Инициализация Telegram Web App
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // Развернуть на весь экран
-
-    // Логика автовоспроизведения при скролле
-    const videos = document.querySelectorAll('video');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.play();
-            } else {
-                entry.target.pause();
-                entry.target.currentTime = 0; // Сброс в начало
-            }
-        });
-    }, { threshold: 0.5 }); // Срабатывает, когда 50% видео видно
-
-    videos.forEach(video => {
-        observer.observe(video);
-        // Клик по видео - пауза/плей
-        video.addEventListener('click', () => {
-            if (video.paused) video.play();
-            else video.pause();
-        });
-    });
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>

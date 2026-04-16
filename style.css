@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: black;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+    overflow: hidden; /* убираем скролл */
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+}
+
+.video-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* чтобы видео заполняло весь экран */
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 30px;
+    z-index: 10;
+    display: none; /* по умолчанию скрыт */
+}
+
+.caption {
+    position: absolute;
+    bottom: 120px;
+    left: 16px;
+    color: white;
+    font-size: 16px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    z-index: 5;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: #ff0050; /* цвет как в TikTok */
+    width: 0%;
+    transition: width 0.1s linear;
+    z-index: 6;
+}
+
+.controls {
+    position: absolute;
+    bottom: 30px;
+    right: 16px;
+    display: flex;
+    gap: 15px;
+    z-index: 20;
+}
+
+.controls button {
+    background: rgba(30,30,30,0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls button:active {
+    background: rgba(80,80,80,0.8);
+    transform: scale(0.9);
+}
+
+/* Стили для мобильных — убираем кнопки, если хочешь только свайпы */
+@media (max-width: 600px) {
+    .controls {
+        display: none;
+    }
+}
