@@ -1,34 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LentaVideo</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Подключаем Telegram Web App SDK -->
+    <!-- Подключаем библиотеку для работы с Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <!-- Контейнер для видео -->
-    <div id="video-container" class="video-container">
-        <video id="current-video" class="video-player" muted loop playsinline webkit-playsinline></video>
+    <div class="app-container">
+        <h2>🔥 LentaVideo</h2>
+        <!-- Сюда будет вставляться видео -->
+        <div id="video-container" class="video-container">
+            <video id="video-player" controls playsinline loop></video>
+        </div>
+        <div class="actions">
+            <button id="like-btn" class="action-btn">❤️ <span id="like-count">0</span></button>
+            <div class="view-count">👁️ <span id="view-count">0</span></div>
+        </div>
+        <!-- Кнопка для перехода к следующему видео -->
+        <button id="next-btn" class="next-btn">⏩ Следующее видео</button>
     </div>
-
-    <!-- Индикатор загрузки (показывается когда видео ещё грузится) -->
-    <div id="loader" class="loader">Загрузка...</div>
-
-    <!-- Простая подпись автора (как в TikTok) -->
-    <div id="caption" class="caption"></div>
-
-    <!-- Индикатор прогресса (полоска) -->
-    <div id="progress-bar" class="progress-bar"></div>
-
-    <!-- Кнопки для переключения (на случай если свайпы неудобно на десктопе) -->
-    <div class="controls">
-        <button id="prev-btn">←</button>
-        <button id="next-btn">→</button>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
