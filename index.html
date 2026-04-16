@@ -1,27 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LentaVideo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>LentaVideo · TikTok для Telegram</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Подключаем библиотеку для работы с Telegram -->
+    <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <h2>🔥 LentaVideo</h2>
-        <!-- Сюда будет вставляться видео -->
-        <div id="video-container" class="video-container">
-            <video id="video-player" controls playsinline loop></video>
+    <div class="app">
+        <!-- Основной контейнер с видео (лента) -->
+        <div class="video-feed" id="videoFeed"></div>
+
+        <!-- Нижнее меню навигации -->
+        <div class="bottom-nav">
+            <div class="nav-item active" data-page="feed">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Лента</span>
+            </div>
+            <div class="nav-item" data-page="upload">
+                <span class="nav-icon">➕</span>
+                <span class="nav-label">Добавить</span>
+            </div>
+            <div class="nav-item" data-page="profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Профиль</span>
+            </div>
         </div>
-        <div class="actions">
-            <button id="like-btn" class="action-btn">❤️ <span id="like-count">0</span></button>
-            <div class="view-count">👁️ <span id="view-count">0</span></div>
+
+        <!-- Модальное окно загрузки видео -->
+        <div class="modal" id="uploadModal">
+            <div class="modal-content">
+                <h3>🎬 Загрузить видео</h3>
+                <input type="file" id="videoFile" accept="video/*" capture>
+                <input type="text" id="videoTitle" placeholder="Название (необязательно)">
+                <button id="uploadBtn">Опубликовать</button>
+                <button id="closeModal">Отмена</button>
+            </div>
         </div>
-        <!-- Кнопка для перехода к следующему видео -->
-        <button id="next-btn" class="next-btn">⏩ Следующее видео</button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
