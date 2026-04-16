@@ -1,25 +1,29 @@
-// Инициализация Telegram WebApp
 const tg = window.Telegram.WebApp;
-tg.expand(); // Раскрыть на весь экран
+tg.expand();
 
 const container = document.getElementById('video-container');
 
-// Функция загрузки видео с нашего сервера
-async function loadVideos() {
-    try {
-        const response = await fetch('/api/videos');
-        const videos = await response.json();
-        
-        videos.forEach(videoData => {
-            createVideoElement(videoData);
-        });
-        
-        // Запускаем первое видео
-        playFirstVideo();
-    } catch (error) {
-        console.error('Ошибка загрузки видео:', error);
+// ✅ Данные ВНУТРИ фронтенда (работает на GitHub Pages)
+const videos = [
+    {
+        id: 1,
+        url: 'https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4',
+        author: '@ocean_lover',
+        description: 'Красивые волны 🌊'
+    },
+    {
+        id: 2,
+        url: 'https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4',
+        author: '@nature_fan',
+        description: 'Весна пришла 🌸'
+    },
+    {
+        id: 3,
+        url: 'https://assets.mixkit.co/videos/preview/mixkit-white-cat-lying-among-the-leaves-1168-large.mp4',
+        author: '@cat_master',
+        description: 'Милый котик 🐱'
     }
-}
+];
 
 function createVideoElement(data) {
     const card = document.createElement('div');
@@ -27,19 +31,24 @@ function createVideoElement(data) {
 
     const video = document.createElement('video');
     video.src = data.url;
-    video.loop = true; // Зациклить видео
-    video.playsInline = true; // Для iOS важно
-    video.muted = false; // По умолчанию звук выключен браузерами, включим по клику
+    video.loop = true;
+    video.playsInline = true;
+    video.muted = true; // Начинаем без звука (требование браузеров)
     
-    // Обработчик клика для паузы/воспроизведения и включения звука
+    // Включение звука по первому клику
     video.addEventListener('click', () => {
+        video.muted = false;
         if (video.paused) {
             video.play();
         } else {
             video.pause();
         }
-        // Браузеры разрешают включить звук только после взаимодействия пользователя
-        video.muted = false; 
+    });
+
+    // Обработка ошибок загрузки видео
+    video.addEventListener('error', (e) => {
+        console.error('Ошибка видео:', data.url, e);
+        card.innerHTML = '<div style="color:white;padding:20px">❌ Не удалось загрузить видео</div>';
     });
 
     const info = document.createElement('div');
@@ -57,33 +66,44 @@ function createVideoElement(data) {
 function playFirstVideo() {
     const firstVideo = document.querySelector('video');
     if (firstVideo) {
-        // Пытаемся autoplay, но браузер может заблокировать звук
-        firstVideo.play().catch(e => console.log("Autoplay blocked, waiting for interaction"));
+        firstVideo.play().catch(e => {
+            console.log("Autoplay ожидает взаимодействия пользователя", e);
+        });
     }
 }
 
-// Observer для автоматического воспроизведения следующего видео при скролле
-// Это продвинутая часть, но она делает опыт как в TikTok
+// Observer для авто-воспроизведения при скролле
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         const video = entry.target.querySelector('video');
+        if (!video) return;
+        
         if (entry.isIntersecting) {
-            // Видео появилось на экране -> играем
-            video.currentTime = 0; // Начать сначала
+            video.currentTime = 0;
             video.play().catch(e => console.log("Play error", e));
         } else {
-            // Видео ушло с экрана -> пауза
             video.pause();
         }
     });
-}, { threshold: 0.6 }); // Срабатывает, когда 60% видео видно
+}, { threshold: 0.6 });
 
-// Применяем observer ко всем видео после загрузки
-// (В реальном проекте нужно вызывать это после добавления элементов)
-setTimeout(() => {
-    document.querySelectorAll('.video-card').forEach(card => {
-        observer.observe(card);
-    });
-}, 1000);
+// Загрузка и инициализация
+function init() {
+    videos.forEach(videoData => createVideoElement(videoData));
+    
+    // Небольшая задержка, чтобы элементы точно отрисовались
+    setTimeout(() => {
+        document.querySelectorAll('.video-card').forEach(card => {
+            observer.observe(card);
+        });
+        playFirstVideo();
+    }, 500);
+}
 
-loadVideos();
+// Ждём, когда Telegram WebApp будет готов
+if (tg.initData) {
+    init();
+} else {
+    // Для тестов в браузере без Telegram
+    document.addEventListener('DOMContentLoaded', init);
+}
