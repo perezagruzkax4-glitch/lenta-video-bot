@@ -2,17 +2,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>LentaVideo</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Подключаем скрипт Telegram WebApp -->
+    <link rel="stylesheet" href="./src/styles.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div id="app">
-        <!-- Сюда JavaScript будет добавлять видео -->
-        <div id="video-container"></div>
+    <div id="app" class="video-feed-container">
+        <div id="videoPlayer" class="video-player">
+            <video id="mainVideo" src="" loop muted playsinline webkit-playsinline></video>
+        </div>
+        
+        <div id="controls" class="controls-panel">
+            <button id="prevBtn" class="control-btn">⏮</button>
+            <button id="playPauseBtn" class="control-btn">▶️</button>
+            <button id="nextBtn" class="control-btn">⏭</button>
+            <button id="fullscreenBtn" class="control-btn">⛶</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>
