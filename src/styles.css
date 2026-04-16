@@ -1,0 +1,59 @@
+/* Общие стили для body и контейнера */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: black;
+}
+
+.video-feed-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Стили для видео-плеера */
+.video-player {
+    width: 100%;
+    height: 100%;
+}
+
+#mainVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Видео всегда будет заполнять экран */
+}
+
+/* Стили для панели управления */
+.controls-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    z-index: 10;
+}
+
+.control-btn {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.2);
+}
