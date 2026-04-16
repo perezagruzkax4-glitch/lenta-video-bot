@@ -2,45 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>LentaVideo · TikTok для Telegram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LentaVideo</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Telegram Web App SDK -->
+    <!-- Подключаем скрипт Telegram WebApp -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="app">
-        <!-- Основной контейнер с видео (лента) -->
-        <div class="video-feed" id="videoFeed"></div>
-
-        <!-- Нижнее меню навигации -->
-        <div class="bottom-nav">
-            <div class="nav-item active" data-page="feed">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-label">Лента</span>
-            </div>
-            <div class="nav-item" data-page="upload">
-                <span class="nav-icon">➕</span>
-                <span class="nav-label">Добавить</span>
-            </div>
-            <div class="nav-item" data-page="profile">
-                <span class="nav-icon">👤</span>
-                <span class="nav-label">Профиль</span>
-            </div>
-        </div>
-
-        <!-- Модальное окно загрузки видео -->
-        <div class="modal" id="uploadModal">
-            <div class="modal-content">
-                <h3>🎬 Загрузить видео</h3>
-                <input type="file" id="videoFile" accept="video/*" capture>
-                <input type="text" id="videoTitle" placeholder="Название (необязательно)">
-                <button id="uploadBtn">Опубликовать</button>
-                <button id="closeModal">Отмена</button>
-            </div>
-        </div>
+    <div id="app">
+        <!-- Сюда JavaScript будет добавлять видео -->
+        <div id="video-container"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
