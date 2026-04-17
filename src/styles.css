@@ -1,59 +1,211 @@
-/* Общие стили для body и контейнера */
-body, html {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
     width: 100%;
     height: 100%;
+    background: #000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: white;
     overflow: hidden;
-    background-color: black;
 }
 
-.video-feed-container {
+/* Контейнер страниц */
+.tab-content {
+    width: 100%;
+    height: calc(100% - 70px); /* Вычитаем высоту нижней панели */
     position: relative;
-    width: 100%;
-    height: 100%;
 }
 
-/* Стили для видео-плеера */
-.video-player {
+.page {
     width: 100%;
     height: 100%;
-}
-
-#mainVideo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Видео всегда будет заполнять экран */
-}
-
-/* Стили для панели управления */
-.controls-panel {
     position: absolute;
-    bottom: 20px;
+    top: 0;
     left: 0;
-    right: 0;
+    display: none;
+    overflow-y: auto;
+}
+
+.page.active {
+    display: block;
+}
+
+/* ----- Лента видео (Главная) ----- */
+.video-feed-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.video-feed {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.video-slide {
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.video-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+}
+
+.actions-panel {
+    position: absolute;
+    right: 16px;
+    bottom: 100px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 20px;
-    padding: 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
     z-index: 10;
 }
 
-.control-btn {
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
+.action-btn {
+    background: transparent;
     border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
+    color: white;
+    font-size: 32px;
     cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: transform 0.2s, background-color 0.2s;
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
 }
 
-.control-btn:active {
-    transform: scale(0.9);
-    background: rgba(255, 255, 255, 0.2);
+/* ----- Страница загрузки ----- */
+.upload-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    color: white;
+}
+
+.upload-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#uploadForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#uploadForm input,
+#uploadForm textarea,
+#uploadForm button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+#uploadForm input,
+#uploadForm textarea {
+    background: #1e1e1e;
+    color: white;
+}
+
+#uploadForm button {
+    background: #e91e63;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#uploadStatus {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* ----- Страница профиля ----- */
+.profile-container {
+    padding: 20px;
+    color: white;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+#userAvatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e91e63;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+#logoutBtn {
+    width: 100%;
+    padding: 14px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ----- Нижняя панель навигации ----- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #121212;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #333;
+    z-index: 20;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 8px 0;
+    width: 33.33%;
+}
+
+.nav-btn.active {
+    color: #e91e63;
+}
+
+.nav-btn:hover {
+    color: white;
 }
