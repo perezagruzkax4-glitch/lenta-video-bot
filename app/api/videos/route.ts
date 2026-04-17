@@ -32,6 +32,11 @@ const videos: VideoData[] = [
   },
 ];
 
+// ✅ Добавьте эту функцию для прямого импорта
+export function getVideosData(): VideoData[] {
+  return videos;
+}
+
 export async function GET() {
   return NextResponse.json(videos);
 }
